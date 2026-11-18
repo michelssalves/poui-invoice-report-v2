@@ -1,0 +1,353 @@
+/* ===== Accordion de Filtros ===== */
+:host ::ng-deep po-accordion.filters-accordion {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Header do accordion (onde aparece "Filtros") */
+:host ::ng-deep .filters-accordion .po-accordion-item-header {
+  background: var(--color-neutral-light-05, #f7f9fc);
+  border: 1px solid var(--color-neutral-light-20, #e6e8eb);
+  border-radius: 12px;
+}
+
+/* Botão do header */
+:host ::ng-deep .filters-accordion .po-accordion-item-header-button {
+  padding: 12px 14px;
+  min-height: 48px;
+}
+
+/* Título */
+:host ::ng-deep .filters-accordion .po-accordion-item-header-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Ícone */
+:host ::ng-deep .filters-accordion .po-accordion-item-header-icon {
+  opacity: 0.85;
+}
+
+/* Conteúdo */
+:host ::ng-deep .filters-accordion .po-accordion-item-content {
+  border: 1px solid var(--color-neutral-light-20, #e6e8eb);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+  background: var(--color-neutral-light-00, #ffffff);
+  padding: 12px 14px 14px;
+}
+
+/* ===== Alinhamento dos botões ===== */
+:host ::ng-deep .filters-actions {
+  border-top: 1px solid var(--color-neutral-light-20, #e6e8eb);
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+/* ===== Indicadores (faixa sempre visível) ===== */
+.kpi-strip {
+  /* As accordions vizinhas têm po-lg-12 (float); sem clear a faixa sobe atrás delas e abre um vão. */
+  clear: both;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 12px 16px 4px;
+}
+
+.kpi-card {
+  flex: 1 1 180px;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 14px;
+  background: var(--color-neutral-light-00, #ffffff);
+  border: 1px solid var(--color-neutral-light-20, #e6e8eb);
+  border-left: 4px solid var(--color-action-default, var(--color-primary));
+  border-radius: 8px;
+}
+
+.kpi-value {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-neutral-dark-90, #1d2426);
+  font-variant-numeric: tabular-nums;
+}
+
+.kpi-label {
+  font-size: 13px;
+  color: var(--color-neutral-dark-70, #4a5c60);
+}
+
+/* ===== Tabela ===== */
+/* Altura vem do [p-height] (fixa o cabeçalho); não forçar height no container. */
+:host ::ng-deep .rcap-table .po-table-header-sticky th {
+  background: var(--color-neutral-light-05, #f7f9fc);
+  color: var(--color-neutral-dark-90, #1d2426);
+  border-bottom: 1px solid var(--color-neutral-light-20, #e6e8eb);
+  font-weight: 600;
+}
+
+:host ::ng-deep .rcap-table .po-table-row:hover td {
+  background: var(--color-neutral-light-10, rgba(0, 0, 0, 0.08)) !important;
+  color: inherit !important;
+  cursor: pointer;
+}
+
+:host ::ng-deep .rcap-table .po-table-row:hover td * {
+  color: inherit !important;
+}
+
+/* Fallback maximo: garante contraste mesmo que a classe da linha mude (token acompanha o tema escuro) */
+:host ::ng-deep .rcap-table table tbody tr:hover td,
+:host ::ng-deep .rcap-table table tbody tr:hover td * {
+  color: var(--color-neutral-dark-90, #1d2426) !important;
+}
+
+:host ::ng-deep .rcap-table .po-table-actions {
+  padding: 4px 0 8px;
+}
+
+:host ::ng-deep .rcap-table .po-table-actions-column-manager .po-button {
+  opacity: 0.75;
+}
+
+:host ::ng-deep .rcap-table .po-table-actions-column-manager .po-button:hover {
+  opacity: 1;
+}
+
+/* melhora leitura de valores monetários */
+:host ::ng-deep .po-table-column-cell {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Widgets ===== */
+.widgets-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.widgets-wrapper > .widget-card {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.widget-card {
+  border-radius: 8px;
+  padding: 10px;
+  transition: all .2s ease;
+}
+
+.widget-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.widget-value {
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center;
+  color: var(--color-neutral-dark-90, #1d2426);
+}
+
+.widget-label {
+  margin-top: 4px;
+  font-size: 13px;
+  text-align: center;
+  color: var(--color-neutral-dark-70, #4a5c60);
+}
+
+.widget-card.destaque {
+  background: var(--color-neutral-light-10, #fcf6f9);
+  border-left: 4px solid var(--color-action-default, var(--color-primary));
+}
+
+.widget-card.destaque .widget-value {
+  color: var(--color-action-default, var(--color-primary));
+}
+
+/* ===== Pager bar ===== */
+.pager-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 44px;
+  padding: 8px 12px;
+  margin: 6px auto 10px auto;
+
+  background: var(--color-neutral-light-05, #f7f7f7);
+  color: var(--color-neutral-dark-90, #1d2426);
+  border: 1px solid var(--color-neutral-light-20, #e5e5e5);
+  border-radius: 6px;
+
+  width: calc(100% - 32px);
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+.pager-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pager-info {
+  font-size: 12px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+:host ::ng-deep .pager-bar po-button .po-button {
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 0 10px !important;
+  font-size: 12px !important;
+}
+
+.pager-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Select com label lateral */
+:host ::ng-deep .pager-bar .page-size .po-field-container {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px;
+  margin: 0 !important;
+}
+
+:host ::ng-deep .pager-bar .page-size .po-field-container-title {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+:host ::ng-deep .pager-bar .page-size .po-label {
+  font-size: 12px !important;
+  line-height: 1 !important;
+  white-space: nowrap;
+  margin: 0 !important;
+}
+
+:host ::ng-deep .pager-bar .page-size .po-field-container-content {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+:host ::ng-deep .pager-bar .page-size select.po-select {
+  height: 28px !important;
+  min-height: 28px !important;
+  width: 90px !important;
+  padding: 0 8px !important;
+  font-size: 12px !important;
+}
+
+.page-size {
+  margin: 0 !important;
+}
+
+.actions-right{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 10px;
+  flex-wrap: nowrap;
+  padding-bottom: 2px;
+}
+
+:host ::ng-deep .actions-right .po-button {
+  height: 40px;
+}
+
+@media (max-width: 1200px) {
+  .actions-right{
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 900px) {
+  .pager-bar {
+    padding: 8px 12px;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .pager-left,
+  .pager-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .pager-info {
+    white-space: normal;
+  }
+
+  :host ::ng-deep .pager-bar .page-size select.po-select {
+    width: 110px !important;
+  }
+}
+
+@media (max-width: 768px){
+  .actions-right{
+    justify-content: stretch;
+  }
+
+  .actions-right po-button{
+    flex: 1 1 160px;
+  }
+
+  .widget-value {
+    font-size: 24px;
+  }
+}
+.excel-column-order {
+  max-height: 50vh;
+  overflow-y: auto;
+  padding-left: 36px;
+}
+
+.excel-column-order li {
+  padding: 6px 8px;
+  border-bottom: 1px solid var(--color-neutral-light-20, #ddd);
+}
+
+.excel-column-order li > span {
+  display: inline-block;
+  width: calc(100% - 90px);
+}
+
+.excel-column-order li > div {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.excel-column-order button {
+  min-width: 36px;
+  min-height: 36px;
+  cursor: pointer;
+}
+
+.rcap-link-sales {
+  color: var(--color-action-default, var(--color-primary));
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.rcap-link-sales:focus-visible {
+  outline: 2px solid var(--color-action-default, var(--color-primary));
+  outline-offset: 2px;
+}
+
+/* ===== Gráficos ===== */
+/* po-chart lê estes tokens ao desenhar; apontar para os neutros faz eixo/legenda seguirem o tema escuro. */
+:host ::ng-deep po-chart {
+  --color-chart-background-color: var(--color-neutral-light-00);
+  --color-chart-axis-label-text: var(--color-neutral-dark-90);
+  --color-chart-legend-text: var(--color-neutral-dark-90);
+  --color-chart-axis-stroke: var(--color-neutral-light-30);
+}

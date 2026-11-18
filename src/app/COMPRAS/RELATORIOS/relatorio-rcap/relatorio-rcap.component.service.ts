@@ -1,0 +1,66 @@
+﻿import { Injectable } from '@angular/core';
+
+import { PoTableColumn, PoTagType } from '@po-ui/ng-components';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class RelatorioRecapService {
+    getColumns(): PoTableColumn[] {
+        return [
+            { property: 'item', label: 'Item', visible: false },
+            { property: 'filial', label: 'Filial', visible: false },
+            { property: 'nota', label: 'Nota', visible: true },
+            { property: 'serie', label: 'Série', visible: false },
+            { property: 'fornecedor', label: 'Fornecedor', visible: true },
+            { property: 'loja', label: 'Loja', visible: false },
+            { property: 'razao', label: 'Razão Social', visible: true },
+            { property: 'cnpjFormatado', label: 'CNPJ', visible: false },
+            { property: 'emissao', label: 'Dt Emis', visible: false, type: 'date' },
+            { property: 'vencimento', label: 'Venc Real', visible: false, type: 'date' },
+            { property: 'DtPreNota', label: 'Venc PreNota', visible: false, type: 'date' },
+            { property: 'DtEmissaoPedido', label: 'Dt Emis Pedido', visible: true, type: 'date' },
+            { property: 'DtPedido', label: 'Dt Pedido', visible: false, type: 'date' },
+            { property: 'HrPedido', label: 'Hr Pedido', visible: false, type: 'time' },
+            { property: 'Dt3Way', label: 'Dt 3Way', visible: true, type: 'date' },
+            { property: 'digitacao', label: 'Dt Digt', visible: true, type: 'date' },
+            { property: 'Hr3Way', label: 'Hr 3Way', visible: true, type: 'time' },
+            { property: 'HrDigitacao', label: 'Hr Digt', visible: true, type: 'time' },
+            { property: 'horasSLALabel', label: 'SLA', visible: true },
+            {
+                property: 'slaStatus', label: 'Dentro SLA', width: '140px', visible: true, type: 'label',
+                labels: [
+                    { value: 'Dentro', label: 'Dentro', type: PoTagType.Success },
+                    { value: 'Fora', label: 'Fora', type: PoTagType.Danger }
+                ]
+            },
+            { property: 'natureza', label: 'Natureza', visible: true },
+            { property: 'tes', label: 'TES', visible: true },
+            { property: 'tipo', label: 'Tipo', visible: true },
+            { property: 'estado', label: 'Estado', visible: false },
+            { property: 'inss', label: 'INSS', visible: false, type: 'currency', format: 'BRL' },
+            { property: 'pis', label: 'PIS', visible: false, type: 'currency', format: 'BRL' },
+            { property: 'cofins', label: 'COFINS', visible: false, type: 'currency', format: 'BRL' },
+            { property: 'csll', label: 'CSLL', visible: false, type: 'currency', format: 'BRL' },
+            { property: 'ipi', label: 'IPI', visible: false, type: 'currency', format: 'BRL' },
+            { property: 'frete', label: 'Frete', visible: false, type: 'currency', format: 'BRL' },
+            { property: 'desconto', label: 'Desconto', visible: false, type: 'currency', format: 'BRL' },
+            { property: 'despesa', label: 'Despesa', visible: false, type: 'currency', format: 'BRL' },
+            { property: 'pedido', label: 'Pedido', visible: true, type: 'cellTemplate' },
+            { property: 'pagamento', label: 'Cond Pagto', visible: false },
+            { property: 'pagamentoDescricao', label: 'Descrição Cond. Pagto', visible: false },
+            { property: 'pr', label: 'PR', visible: true, type: 'cellTemplate' },
+            { property: 'dataAprovacaoPR', label: 'Dt Aprov. PR', visible: true },
+            { property: 'contrato', label: 'Contrato', visible: true },
+            { property: 'medicao', label: 'Medição', visible: true },
+            { property: 'codAprovadorPedido', label: 'Cód. Aprovador Pedido', visible: false },
+            { property: 'aprovadorPedido', label: 'Aprovador Pedido', visible: false },
+            { property: 'TTPedido', label: 'R$ Pedido', visible: false, type: 'currency', format: 'BRL' },
+            { property: 'liquido', label: 'R$ Líquido', visible: false, type: 'currency', format: 'BRL' },
+            { property: 'bruto', label: 'R$ Bruto', visible: true, type: 'currency', format: 'BRL' },
+            { property: 'diferenca', label: 'R$ Saldo', visible: false, type: 'currency', format: 'BRL' },
+            { property: 'user', label: 'Usuário', visible: true }
+        ];
+    }
+
+}

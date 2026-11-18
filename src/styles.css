@@ -1,0 +1,26 @@
+/*
+ * Linha da sessão e aviso de abertura. Ficam aqui (global) porque o CSS do componente do relatório
+ * já está perto do limite de tamanho do build (anyComponentStyle).
+ */
+.sessao-info {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-neutral-dark-70, #4d4d4d);
+}
+
+.demo-tag {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  background: var(--color-feedback-warning-lightest, #fff4e5);
+  color: var(--color-feedback-warning-darker, #7a4b00);
+}
+
+.erro-abertura {
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background: var(--color-feedback-negative-lightest, #f6e6e5);
+  color: var(--color-feedback-negative-darker, #72211d);
+}

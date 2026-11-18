@@ -1,0 +1,179 @@
+﻿<div>
+    <!-- Sem seletor de empresa: pelo WebChannel o relatório roda na sessão (empresa/filial logada). -->
+    <p class="sessao-info po-mt-2" *ngIf="empresa">
+        Empresa <b>{{ empresa }} - {{ nomeEmpresa }}</b> · Filial <b>{{ filial }} - {{ nomeFilial }}</b>
+        <span *ngIf="modoDemo" class="demo-tag">demonstração com dados fictícios</span>
+    </p>
+    <p class="erro-abertura po-mt-2" role="alert" *ngIf="erroAbertura">{{ erroAbertura }}</p>
+
+    <po-accordion class="filters-accordion po-lg-12 po-mt-2">
+        <po-accordion-item p-label="Filtros">
+            <div class="po-row">
+
+                <po-select class="po-sm-12 po-md-3 po-lg-2" p-label="Tipo" name="tipo" [ngModel]="tipo"
+                    (p-change)="tipo = $event" [p-options]="tipoOptions">
+                </po-select>
+
+                <po-select class="po-sm-12 po-md-3 po-lg-2" p-label="Liquidado?" name="liquidado" [ngModel]="liquidado"
+                    (p-change)="liquidado = $event" [p-options]="liquidadoOptions">
+                </po-select>
+
+                <po-input class="po-sm-12 po-md-6 po-lg-2" name="notaFiscal" [(ngModel)]="notaFiscal" p-clean
+                    p-label="Nota Fiscal" (keydown.enter)="filtrar()">
+                </po-input>
+
+                <po-input class="po-sm-12 po-md-6 po-lg-2" name="fornecedor" [(ngModel)]="fornecedor" p-clean
+                    p-label="Fornecedor" (keydown.enter)="filtrar()">
+                </po-input>
+
+            </div>
+
+            <div class="po-row po-mt-1">
+
+                <po-select class="po-sm-12 po-md-3 po-lg-2" p-label="Papeleta" name="papeleta" [ngModel]="papeleta"
+                    (p-change)="papeleta = $event" [p-options]="papeletaOptions">
+                </po-select>
+
+                <po-select class="po-sm-12 po-md-3 po-lg-2" p-label="Imprimir?" name="imprimir" [ngModel]="imprimir"
+                    (p-change)="imprimir = $event" [p-options]="imprimirOptions">
+                </po-select>
+
+                <po-select class="po-sm-12 po-md-3 po-lg-2" p-label="Agrupar?" name="agruparNaturezaTes"
+                    [ngModel]="agruparNaturezaTes" (p-change)="agruparNaturezaTes = $event"
+                    [p-options]="agruparNaturezaTesOptions">
+                </po-select>
+
+                <po-select class="po-sm-12 po-md-3 po-lg-2" p-label="Detalhar aprovações?"
+                    name="detalharAprovacoes" [ngModel]="detalharAprovacoes"
+                    (p-change)="detalharAprovacoes = $event" [p-options]="detalharAprovacoesOptions">
+                </po-select>
+
+                <po-datepicker class="po-sm-12 po-md-3 po-lg-2" name="startDate" [ngModel]="startDate"
+                    (p-change)="onStartChanged($event)" p-format="dd/mm/yyyy" p-label="Data Inicial">
+                </po-datepicker>
+
+                <po-datepicker class="po-sm-12 po-md-3 po-lg-2" name="endDate" [ngModel]="endDate"
+                    (p-change)="onEndChanged($event)" p-format="dd/mm/yyyy" p-label="Data Final">
+                </po-datepicker>
+
+            </div>
+
+            <!-- Barra própria: com 12 colunas de filtros, os botões quebravam linha e ficavam soltos à esquerda. -->
+            <div class="filters-actions actions-right">
+                <po-button p-label="Colunas do Excel" p-kind="tertiary"
+                    (p-click)="prepararColunasExcel(); ordemExcelModal.open()"></po-button>
+                <po-button p-label="Excel" p-kind="secondary" [p-disabled]="loading" (p-click)="exportToExcel()">
+                </po-button>
+                <po-button p-label="Filtrar" p-kind="primary" [p-loading]="loading" (p-click)="filtrar()"></po-button>
+            </div>
+
+        </po-accordion-item>
+    </po-accordion>
+    <!-- Indicadores sempre visíveis; o accordion fica só com os gráficos. -->
+    <div class="kpi-strip" role="status" aria-live="polite">
+        <div class="kpi-card">
+            <span class="kpi-value">{{ totalNotas }}</span>
+            <span class="kpi-label">NFs</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-value">{{ mediaDiasSLA }} D</span>
+            <span class="kpi-label">Média dia</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-value">{{ percentDentroSLA }}%</span>
+            <span class="kpi-label">Dentro SLA ({{ slaHoras }}h) · {{ totalDentroSLA }}/{{ totalNotas }}</span>
+        </div>
+    </div>
+
+    <po-accordion class="filters-accordion po-lg-12 po-mt-2 po-mb-1">
+        <!-- po-chart criado com a seção recolhida mede largura 0 e não desenha; só cria ao expandir. -->
+        <po-accordion-item p-label="Gráficos" (p-expand)="graficosVisiveis = true"
+            (p-collapse)="graficosVisiveis = false">
+            <div *ngIf="graficosVisiveis" class="po-row mb-4">
+                <div class="po-md-12 po-lg-12">
+                    <po-container class="po-sm-12 po-lg-8" [p-height]="435">
+                        <po-chart [p-categories]="categoriasUsuarios" [p-series]="colunaItens"
+                            [p-options]="chartOptions">
+                        </po-chart>
+                    </po-container>
+                    <po-container class="po-sm-12 po-lg-4" [p-height]="435">
+                        <po-chart [p-type]="pizzaChartType" [p-options]="chartOptions" [p-series]="pizzaItens">
+                        </po-chart>
+                    </po-container>
+                </div>
+            </div>
+        </po-accordion-item>
+    </po-accordion>
+
+    <ng-template #pager>
+        <div class="pager-bar">
+            <div class="pager-left">
+                <po-button p-label="Anterior" p-kind="tertiary" [p-disabled]="page <= 1" (p-click)="prevPage()">
+                </po-button>
+
+                <po-button p-label="Próxima" p-kind="tertiary" [p-disabled]="page >= totalPages" (p-click)="nextPage()">
+                </po-button>
+
+                <span class="pager-info">
+                    Página <b>{{ page }}</b> / <b>{{ totalPages }}</b>
+                    <span class="po-ml-1">•</span>
+                    Total: <b>{{ total }}</b>
+                </span>
+            </div>
+
+            <div class="pager-right">
+                <po-select class="page-size" p-label="Tamanho" [ngModel]="pageSize" (ngModelChange)="setPageSize($event)"
+                    [p-options]="pageSizeOptions">
+                </po-select>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-container *ngTemplateOutlet="pager"></ng-container>
+
+    <!-- p-loading bloqueia só a tabela: os filtros continuam na tela durante a consulta. -->
+    <po-table class="rcap-table" [p-sort]="true" [p-striped]="true" [p-columns]="columns" [p-items]="items"
+        [p-loading]="loading" [p-height]="alturaTabela" [p-literals]="tableLiterals"
+        (p-change-visible-columns)="onVisibleColumnsChanged($event)"
+        (p-restore-column-manager)="onRestoreColumnManager($event)">
+        <ng-template p-table-cell-template let-column="column" let-row="row">
+            <ng-container *ngIf="column.property === 'pedido'">
+                <a *ngIf="row.salesPedido; else pedidoSemLink" class="rcap-link-sales" href="#"
+                    title="Abrir pedido no Salesforce" (click)="abrirSalesforce($event, 'PEDIDO', row.salesPedido)">{{ row.pedido }}</a>
+                <ng-template #pedidoSemLink>{{ row.pedido }}</ng-template>
+            </ng-container>
+            <ng-container *ngIf="column.property === 'pr'">
+                <div *ngFor="let link of row.prLinks">
+                    <a *ngIf="link.salesId; else prSemLink" class="rcap-link-sales" href="#"
+                        title="Abrir PR no Salesforce" (click)="abrirSalesforce($event, 'PR', link.salesId)">{{ link.numero }}</a>
+                    <ng-template #prSemLink>{{ link.numero }}</ng-template>
+                </div>
+            </ng-container>
+        </ng-template>
+    </po-table>
+
+    <ng-container *ngTemplateOutlet="pager"></ng-container>
+
+</div>
+
+<po-modal #ordemExcelModal p-title="Ordem das colunas do Excel" p-size="lg">
+    <p class="po-mb-2">Ajuste a posição das colunas. A ordem será salva para seu usuário neste navegador.</p>
+    <p *ngIf="!usuarioExcel" role="status" class="po-mb-2">Usuário não identificado. Abra o relatório pelo Protheus para salvar sua preferência.</p>
+    <ol class="excel-column-order">
+        <li *ngFor="let coluna of colunasExcel; let i = index">
+            <span>{{ coluna.header }}</span>
+            <div>
+                <button type="button" [disabled]="i === 0" [attr.aria-label]="'Mover ' + coluna.header + ' para cima'"
+                    (click)="moverColunaExcel(i, i - 1)">↑</button>
+                <button type="button" [disabled]="i === colunasExcel.length - 1" [attr.aria-label]="'Mover ' + coluna.header + ' para baixo'"
+                    (click)="moverColunaExcel(i, i + 1)">↓</button>
+            </div>
+        </li>
+    </ol>
+    <po-modal-footer>
+        <po-button p-label="Restaurar padrão" p-kind="tertiary" (p-click)="restaurarOrdemExcel()"></po-button>
+        <po-button p-label="Cancelar" p-kind="secondary" (p-click)="ordemExcelModal.close()"></po-button>
+        <po-button p-label="Salvar" p-kind="primary" [p-disabled]="!usuarioExcel"
+            (p-click)="salvarOrdemExcel() && ordemExcelModal.close()"></po-button>
+    </po-modal-footer>
+</po-modal>
