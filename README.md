@@ -45,6 +45,7 @@ limite; um Filtrar novo descarta a resposta do anterior).
 npm ci
 npx ng serve -c demo        # demonstração em http://localhost:4200
 npm run protheus:build      # pacote .app para o RPO
+npm run deploy              # publica a demonstração no GitHub Pages (branch gh-pages)
 ```
 
 No Protheus, o launcher chama `FwCallApp("poui-invoice-report-v2")` e trata as mensagens acima numa

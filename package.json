@@ -6,7 +6,8 @@
                     "start":  "ng serve -c demo",
                     "build:protheus":  "ng build -c protheus",
                     "build:demo":  "ng build -c demo",
-                    "protheus:build":  "powershell -ExecutionPolicy Bypass -File ./scripts/build-protheus-app.ps1"
+                    "protheus:build":  "powershell -ExecutionPolicy Bypass -File ./scripts/build-protheus-app.ps1",
+                    "deploy":  "ng build -c demo --base-href /poui-invoice-report-v2/ \u0026\u0026 npx angular-cli-ghpages --dir=dist/poui-invoice-report-v2/browser"
                 },
     "private":  true,
     "dependencies":  {
@@ -46,6 +47,7 @@
                             "@types/file-saver-es":  "^2.0.3",
                             "@types/jasmine":  "~5.1.0",
                             "@types/xlsx":  "^0.0.35",
+                            "angular-cli-ghpages":  "^3.1.2",
                             "jasmine-core":  "~5.6.0",
                             "karma":  "~6.4.0",
                             "karma-chrome-launcher":  "~3.2.0",
